@@ -25,7 +25,30 @@ iOS LiquidGlassTabBar tasarımını Android Jetpack Compose'a uyarlayan, özelle
 
 ## 📸 Ekran Görüntüleri
 
-> **Not:** Ekran görüntüleri için `app/` modülündeki preview'ları çalıştırabilirsiniz.
+<div align="center">
+
+### Light Theme (Açık Tema)
+
+<img src="assets/screenshots/Screenshot 2025-12-23 at 23.12.51.png" width="280" alt="Light Theme - 5 Tabs"/>
+
+### Dark Theme (Koyu Tema)
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/Screenshot_20251223_232033.png" width="280" alt="Dark Theme - List View"/>
+      <br/>
+      <sub>Liste Görünümü</sub>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/Screenshot_20251223_235653.png" width="280" alt="Dark Theme - Explore View"/>
+      <br/>
+      <sub>Ayarlar Tabı</sub>
+    </td>
+  </tr>
+</table>
+
+</div>
 
 ## 📦 Kurulum
 
