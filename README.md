@@ -378,30 +378,5 @@ data class SpacingConfig(
    )
    ```
 
-## 🤝 Katkıda Bulunma
-
-Katkılarınızı bekliyoruz! Lütfen önce bir issue açın veya pull request gönderin.
-
-## 📄 Lisans
-
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
-
-## 👤 Yazar
-
-**Dilara**
-
-- GitHub: [@yourusername](https://github.com/yourusername)
-
-## 🙏 Teşekkürler
-
-- [Haze](https://github.com/chrisbanes/haze) - Blur efekti için
-- iOS LiquidGlassTabBar tasarımından ilham alınmıştır
-
----
-
-<div align="center">
-
-⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
-
 </div>
 
