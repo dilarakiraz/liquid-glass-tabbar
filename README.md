@@ -57,7 +57,7 @@ liquidglasstabbar/
 **1. Projeyi clone edin veya `liquidglass/` modülünü kopyalayın:**
 
 ```bash
-git clone https://github.com/yourusername/liquid-glass-tabbar.git
+git clone https://github.com/dilarakiraz/liquid-glass-tabbar.git
 ```
 
 **2. settings.gradle.kts** dosyasına modülü ekleyin:
@@ -377,6 +377,26 @@ data class SpacingConfig(
        searchIconTint = Color(0xFF424242)  // Koyu gri - açık temada görünür
    )
    ```
+
+## 📄 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+
+## 👤 Yazar
+
+**Dilara Kiraz**
+
+- GitHub: [@dilarakiraz](https://github.com/dilarakiraz)
+
+## 🙏 Teşekkürler
+
+- iOS LiquidGlassTabBar tasarımından ilham alınmıştır
+
+---
+
+<div align="center">
+
+⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
 
 </div>
 
