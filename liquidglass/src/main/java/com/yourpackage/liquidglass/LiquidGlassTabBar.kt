@@ -28,10 +28,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.chrisbanes.haze.HazeState
 import com.yourpackage.liquidglass.models.GlassConfig
 import com.yourpackage.liquidglass.models.SpacingConfig
 import com.yourpackage.liquidglass.models.TabItem
+import dev.chrisbanes.haze.HazeState
 
 /**
  * iOS LiquidGlassTabBar'ın Android eşdeğeri
@@ -62,6 +62,7 @@ fun LiquidGlassTabBar(
     barHeight: Dp = 62.dp,
     showSearchButton: Boolean = true,
     searchIcon: androidx.compose.ui.graphics.vector.ImageVector? = null,
+    searchIconTint: Color = Color.White,  // Search icon rengi (varsayılan: beyaz)
 ) {
     val shape = RoundedCornerShape(999.dp)
     
@@ -173,7 +174,7 @@ fun LiquidGlassTabBar(
                             imageVector = icon,
                             contentDescription = "Search",
                             modifier = Modifier.size(24.dp),
-                            tint = Color.White
+                            tint = searchIconTint  // Parametre olarak gelen renk
                         )
                     }
                 }

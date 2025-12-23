@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":liquidglass"))  // Liquid Glass Tab Bar kütüphanesi
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

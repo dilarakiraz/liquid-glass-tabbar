@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "liquid-glass-tabbar"
 include(":app")
+include(":liquidglass")
  

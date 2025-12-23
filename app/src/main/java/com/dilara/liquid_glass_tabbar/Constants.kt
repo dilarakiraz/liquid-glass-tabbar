@@ -1,10 +1,10 @@
 package com.dilara.liquid_glass_tabbar
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BarChart
-import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -16,19 +16,26 @@ import com.yourpackage.liquidglass.models.TabItem
 object TabBarConstants {
     /**
      * Varsayılan tab listesi
+     * GitHub için özelleştirilmiş tab'lar
      */
     val defaultTabs = listOf(
         TabItem(
             title = "Sayfam",
-            icon = Icons.Default.Home
+            icon = Icons.Default.Home,
+            selectedColor = Color(0xFF82DBF7),    // Açık mavi (Home için)
+            unselectedColor = Color(0xFFD3DCE6)   // Açık gri-mavi
         ),
         TabItem(
-            title = "Piyasalar",
-            icon = Icons.Default.BarChart
+            title = "Listem",
+            icon = Icons.Default.List,
+            selectedColor = Color(0xFF4ECDC4),     // Turkuaz (Liste için)
+            unselectedColor = Color(0xFFD3DCE6)   // Açık gri-mavi
         ),
         TabItem(
-            title = "Keşfet",
-            icon = Icons.Default.Explore
+            title = "Ayarlar",
+            icon = Icons.Default.Settings,
+            selectedColor = Color(0xFF9B9B9B),     // Gri (Ayarlar için)
+            unselectedColor = Color(0xFFD3DCE6)   // Açık gri-mavi
         )
     )
     
@@ -91,25 +98,100 @@ object TabBarConstants {
     )
     
     /**
+     * Light theme için gradient background renkleri
+     */
+    val lightThemeGradientColors = listOf(
+        Color(0xFFF5F5F5),  // Açık gri
+        Color(0xFFFFFFFF),  // Beyaz
+        Color(0xFFF0F0F0)   // Açık gri
+    )
+    
+    /**
+     * Light theme için Glass Config
+     * Açık tema için koyu border ve renkler
+     */
+    val lightThemeGlassConfig = com.yourpackage.liquidglass.models.GlassConfig(
+        baseTint = Color(0x0D000000),      // Base tint (%5 siyah)
+        gradientTint = Color(0x99FFFFFF),  // Gradient tint (%60 beyaz)
+        overlayTint = Color(0x33FFFFFF),    // Overlay tint (%20 beyaz)
+        containerOpacity = 0.95f,
+        borderGradient = com.yourpackage.liquidglass.models.BorderGradient.Linear(
+            stops = listOf(
+                0.0f to Color.Black.copy(alpha = 0.3f),   // Koyu border (açık temada görünür)
+                0.2f to Color.Black.copy(alpha = 0.15f),
+                0.4f to Color.Black.copy(alpha = 0.08f),
+                0.6f to Color.Black.copy(alpha = 0.08f),
+                0.8f to Color.Black.copy(alpha = 0.15f),
+                1.0f to Color.Black.copy(alpha = 0.3f)
+            )
+        )
+    )
+    
+    /**
+     * Light theme için Search Button Glass Config
+     */
+    val lightThemeGlassConfigForCircle = com.yourpackage.liquidglass.models.GlassConfig(
+        baseTint = Color(0x0D000000),
+        gradientTint = Color(0x99FFFFFF),
+        overlayTint = Color(0x33FFFFFF),
+        borderWidth = 1.dp,
+        containerOpacity = 0.95f,
+        borderGradient = com.yourpackage.liquidglass.models.BorderGradient.Linear(
+            stops = listOf(
+                0.0f to Color.Black.copy(alpha = 0.4f),   // Koyu border
+                0.2f to Color.Black.copy(alpha = 0.15f),
+                0.4f to Color.Black.copy(alpha = 0.08f),
+                0.6f to Color.Black.copy(alpha = 0.08f),
+                0.8f to Color.Black.copy(alpha = 0.15f),
+                1.0f to Color.Black.copy(alpha = 0.4f)
+            )
+        )
+    )
+    
+    /**
+     * Light theme için tab renkleri (koyu renkler - açık temada görünür)
+     */
+    val lightThemeTabs = listOf(
+        TabItem(
+            title = "Sayfam",
+            icon = Icons.Default.Home,
+            selectedColor = Color(0xFF1976D2),    // Koyu mavi (açık temada görünür)
+            unselectedColor = Color(0xFF757575)   // Koyu gri
+        ),
+        TabItem(
+            title = "Listem",
+            icon = Icons.Default.List,
+            selectedColor = Color(0xFF00796B),     // Koyu turkuaz
+            unselectedColor = Color(0xFF757575)
+        ),
+        TabItem(
+            title = "Ayarlar",
+            icon = Icons.Default.Settings,
+            selectedColor = Color(0xFF424242),     // Koyu gri
+            unselectedColor = Color(0xFF757575)
+        )
+    )
+    
+    /**
      * Özel tab renkleri örneği
      */
     val customColoredTabs = listOf(
         TabItem(
             title = "Sayfam",
             icon = Icons.Default.Home,
-            selectedColor = Color(0xFFFF6B6B), // Kırmızı
+            selectedColor = Color(0xFF82DBF7), // Açık mavi
             unselectedColor = Color(0xFF95A5A6) // Gri
         ),
         TabItem(
-            title = "Piyasalar",
-            icon = Icons.Default.BarChart,
+            title = "Listem",
+            icon = Icons.Default.List,
             selectedColor = Color(0xFF4ECDC4), // Turkuaz
             unselectedColor = Color(0xFF95A5A6)
         ),
         TabItem(
-            title = "Keşfet",
-            icon = Icons.Default.Explore,
-            selectedColor = Color(0xFFFFE66D), // Sarı
+            title = "Ayarlar",
+            icon = Icons.Default.Settings,
+            selectedColor = Color(0xFF9B9B9B), // Gri
             unselectedColor = Color(0xFF95A5A6)
         )
     )

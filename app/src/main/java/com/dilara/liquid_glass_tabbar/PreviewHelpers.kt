@@ -19,7 +19,7 @@ import dev.chrisbanes.haze.hazeSource
  */
 object PreviewHelpers {
     /**
-     * Preview için hazırlanmış tab bar container
+     * Preview için hazırlanmış tab bar container (Dark theme)
      * Blur efekti için gradient background ve hazeSource içerir
      */
     @Composable
@@ -33,6 +33,37 @@ object PreviewHelpers {
                 .background(
                     brush = Brush.verticalGradient(
                         colors = TabBarConstants.previewGradientColors
+                    )
+                )
+        ) {
+            Scaffold(
+                bottomBar = content
+            ) { paddingValues ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                        .hazeSource(state = hazeState)
+                )
+            }
+        }
+    }
+    
+    /**
+     * Preview için hazırlanmış tab bar container (Light theme)
+     * Açık tema için gradient background
+     */
+    @Composable
+    fun PreviewTabBarContainerLight(
+        hazeState: HazeState,
+        content: @Composable () -> Unit
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = TabBarConstants.lightThemeGradientColors
                     )
                 )
         ) {

@@ -30,10 +30,10 @@ data class GlassConfig(
     /**
      * Border genişliği
      * iOS spesifikasyonuna göre:
-     * Tab buttons için: 0.8dp (iOS: 0.8px)
+     * Tab buttons için: 0.75dp (iOS: 0.8px - daha ince görünüm için optimize edildi)
      * Search button için: 1.dp (iOS: 1px)
      */
-    val borderWidth: Dp = 0.8.dp,
+    val borderWidth: Dp = 0.75.dp,
     
     /**
      * Border gradient yapılandırması
@@ -43,13 +43,15 @@ data class GlassConfig(
     /**
      * Blur radius (Haze için)
      * iOS'taki systemUltraThinMaterial'a eşdeğer
+     * iOS tasarımına daha yakın olması için artırıldı
      */
-    val blurRadius: Dp = 7.dp,
+    val blurRadius: Dp = 10.dp,
     
     /**
      * Container opacity (iOS: 0.99)
+     * iOS tasarımına daha yakın olması için optimize edildi
      */
-    val containerOpacity: Float = 0.99f,
+    val containerOpacity: Float = 0.95f,
     
     /**
      * Seçili tab background rengi
@@ -60,8 +62,9 @@ data class GlassConfig(
     /**
      * Seçili tab background alpha değeri
      * iOS'taki blendMode(.plusLighter) efektini simüle eder
+     * iOS tasarımına daha yakın olması için artırıldı
      */
-    val selectedTabBackgroundAlpha: Float = 0.24f
+    val selectedTabBackgroundAlpha: Float = 0.3f
 ) {
     companion object {
         /**
@@ -71,9 +74,12 @@ data class GlassConfig(
         
         /**
          * Search button için config
+         * iOS tasarımına daha yakın olması için optimize edildi
          */
         fun forCircle() = GlassConfig(
             borderWidth = 1.dp,
+            blurRadius = 10.dp,  // Daha belirgin blur
+            containerOpacity = 0.95f,  // Daha şeffaf
             borderGradient = BorderGradient.defaultForCircle()
         )
         

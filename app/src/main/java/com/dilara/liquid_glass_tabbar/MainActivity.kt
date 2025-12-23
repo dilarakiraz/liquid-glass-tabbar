@@ -7,16 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,15 +24,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dilara.liquid_glass_tabbar.ui.theme.LiquidglasstabbarTheme
 import com.yourpackage.liquidglass.LiquidGlassTabBar
-import com.yourpackage.liquidglass.models.GlassConfig
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
-import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,7 +97,7 @@ fun MainScreen() {
             // İçerik tab bar'ın altına kadar uzar ki blur efekti çalışsın
             when (selectedTab) {
                 0 -> {
-                    // Sayfam Tab - Görseldeki gibi daha fazla içerik
+                    // Sayfam Tab
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -126,7 +123,6 @@ fun MainScreen() {
                             modifier = Modifier.padding(bottom = 32.dp)
                         )
                         // Tab bar'ın arkasında görünmesi için daha fazla içerik
-                        // Görseldeki gibi uzun bir liste - blur efektini görmek için
                         repeat(30) { index ->
                             Box(
                                 modifier = Modifier
@@ -143,14 +139,14 @@ fun MainScreen() {
                     }
                 }
                 1 -> {
-                    // Piyasalar Tab
+                    // Listem Tab
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(24.dp)
                     ) {
                         Text(
-                            text = "Piyasalar",
+                            text = "Listem",
                             color = Color.White,
                             fontSize = 32.sp,
                             fontWeight = FontWeight.Bold,
@@ -169,7 +165,6 @@ fun MainScreen() {
                             modifier = Modifier.padding(bottom = 32.dp)
                         )
                         // Tab bar'ın arkasında görünmesi için daha fazla içerik
-                        // Görseldeki gibi uzun bir liste - blur efektini görmek için
                         repeat(30) { index ->
                             Box(
                                 modifier = Modifier
@@ -177,7 +172,7 @@ fun MainScreen() {
                                     .padding(vertical = 8.dp)
                             ) {
                                 Text(
-                                    text = "Piyasa Verisi ${index + 1} - Blur efektiyle görünür",
+                                    text = "Liste Öğesi ${index + 1} - Blur efektiyle görünür",
                                     color = Color.White.copy(alpha = 0.8f),
                                     fontSize = 14.sp
                                 )
@@ -186,14 +181,14 @@ fun MainScreen() {
                     }
                 }
                 2 -> {
-                    // Keşfet Tab
+                    // Ayarlar Tab
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(24.dp)
                     ) {
                         Text(
-                            text = "Keşfet",
+                            text = "Ayarlar",
                             color = Color.White,
                             fontSize = 32.sp,
                             fontWeight = FontWeight.Bold,
@@ -212,7 +207,6 @@ fun MainScreen() {
                             modifier = Modifier.padding(bottom = 32.dp)
                         )
                         // Tab bar'ın arkasında görünmesi için daha fazla içerik
-                        // Görseldeki gibi uzun bir liste - blur efektini görmek için
                         repeat(30) { index ->
                             Box(
                                 modifier = Modifier
@@ -220,7 +214,7 @@ fun MainScreen() {
                                     .padding(vertical = 8.dp)
                             ) {
                                 Text(
-                                    text = "Keşfet İçeriği ${index + 1} - Şeffaf tab bar üzerinde",
+                                    text = "Ayar ${index + 1} - Şeffaf tab bar üzerinde",
                                     color = Color.White.copy(alpha = 0.8f),
                                     fontSize = 14.sp
                                 )

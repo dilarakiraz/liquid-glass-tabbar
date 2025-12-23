@@ -34,14 +34,14 @@ sealed class BorderGradient {
         /**
          * iOS Tab Buttons için varsayılan gradient
          * iOS spesifikasyonuna göre tam değerler
-         * Android'de görünür olması için opacity değerleri biraz artırıldı
+         * iOS tasarımına daha yakın olması için optimize edildi
          */
         fun default() = Linear(
             stops = listOf(
                 0.0f to Color.White.copy(alpha = 0.5f),   // Sol üst - çok yoğun
                 0.2f to Color.White.copy(alpha = 0.2f),   // Hızlı azalma
-                0.4f to Color.White.copy(alpha = 0.08f),  // Çok ince (iOS: 0.05, Android'de görünür olması için 0.08)
-                0.6f to Color.White.copy(alpha = 0.08f),  // Çok ince (iOS: 0.05, Android'de görünür olması için 0.08)
+                0.4f to Color.White.copy(alpha = 0.05f),  // Çok ince (iOS ile aynı)
+                0.6f to Color.White.copy(alpha = 0.05f),  // Çok ince (iOS ile aynı)
                 0.8f to Color.White.copy(alpha = 0.2f),   // Artış başlangıcı
                 1.0f to Color.White.copy(alpha = 0.5f)   // Sağ alt - yoğun
             )
@@ -50,14 +50,14 @@ sealed class BorderGradient {
         /**
          * iOS Search Button için varsayılan gradient
          * iOS spesifikasyonuna göre tam değerler
-         * Android'de görünür olması için opacity değerleri biraz artırıldı
+         * iOS tasarımına daha yakın olması için optimize edildi
          */
         fun defaultForCircle() = Linear(
             stops = listOf(
                 0.0f to Color.White.copy(alpha = 0.7f),   // Sol üst - çok yoğun
                 0.2f to Color.White.copy(alpha = 0.2f),   // Hızlı azalma
-                0.4f to Color.White.copy(alpha = 0.08f),  // Çok ince (iOS: 0.05, Android'de görünür olması için 0.08)
-                0.6f to Color.White.copy(alpha = 0.08f),  // Çok ince (iOS: 0.05, Android'de görünür olması için 0.08)
+                0.4f to Color.White.copy(alpha = 0.05f),  // Çok ince (iOS ile aynı)
+                0.6f to Color.White.copy(alpha = 0.05f),  // Çok ince (iOS ile aynı)
                 0.8f to Color.White.copy(alpha = 0.2f),   // Artış başlangıcı
                 1.0f to Color.White.copy(alpha = 0.8f)    // Sağ alt - yoğun
             )
