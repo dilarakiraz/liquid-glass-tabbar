@@ -38,12 +38,10 @@ iOS LiquidGlassTabBar tasarımını Android Jetpack Compose'a uyarlayan, özelle
     <td align="center">
       <img src="assets/screenshots/Screenshot_20251223_232033.png" width="280" alt="Dark Theme - List View"/>
       <br/>
-      <sub>Liste Görünümü</sub>
     </td>
     <td align="center">
       <img src="assets/screenshots/Screenshot_20251223_235653.png" width="280" alt="Dark Theme - Explore View"/>
       <br/>
-      <sub>Ayarlar Tabı</sub>
     </td>
   </tr>
 </table>
