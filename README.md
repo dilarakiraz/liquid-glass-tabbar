@@ -73,7 +73,40 @@ liquidglasstabbar/
 
 > **Not:** `app/` modülü sadece demo/örnek amaçlıdır. Kütüphaneyi kullanmak için sadece `liquidglass/` modülüne ihtiyacınız vardır.
 
-### Gradle Setup
+### 🚀 SDK Olarak Kullanım (Önerilen - JitPack)
+
+**1. Projenizin `settings.gradle.kts` (veya `settings.gradle`) dosyasına JitPack repository'sini ekleyin:**
+
+```kotlin
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") } // JitPack ekleyin
+    }
+}
+```
+
+**2. Uygulamanızın `build.gradle.kts` (veya `build.gradle`) dosyasına dependency ekleyin:**
+
+```kotlin
+dependencies {
+    implementation("com.github.dilarakiraz:liquid-glass-tabbar:1.0.0")
+    // ... diğer dependencies
+}
+```
+
+> **Not:** İlk release'den sonra version tag'i oluşturmanız gerekecek. Şimdilik `main-SNAPSHOT` veya commit hash kullanabilirsiniz:
+> ```kotlin
+> implementation("com.github.dilarakiraz:liquid-glass-tabbar:main-SNAPSHOT")
+> // veya belirli bir commit için:
+> implementation("com.github.dilarakiraz:liquid-glass-tabbar:abc1234")
+> ```
+
+### 📁 Yerel Modül Olarak Kullanım
+
+Eğer kütüphaneyi yerel olarak kullanmak istiyorsanız:
 
 **1. Projeyi clone edin veya `liquidglass/` modülünü kopyalayın:**
 
