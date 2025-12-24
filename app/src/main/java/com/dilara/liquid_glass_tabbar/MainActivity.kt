@@ -48,23 +48,21 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
-    val hazeState = remember { HazeState() }
     var selectedTab by remember { mutableIntStateOf(0) }
+    val hazeState = remember { HazeState() }
     
     Scaffold(
         bottomBar = {
             // Tab bar şeffaf arka plan üzerinde (iOS gibi)
             // Arka plan şeffaf - blur efekti arka plandaki içeriği gösterir
             LiquidGlassTabBar(
-                hazeState = hazeState,
-                selectedTab = selectedTab,
-                tabs = TabBarConstants.defaultTabs,
+                items = TabBarConstants.defaultTabs,
+                selectedIndex = selectedTab,
                 onTabSelected = { selectedTab = it },
                 onSearchClick = { /* Search action */ },
+                style = TabBarConstants.darkThemeStyle,
                 searchIcon = TabBarConstants.defaultSearchIcon,
-                // Dark theme glass config kullanılıyor
-                glassConfig = TabBarConstants.darkThemeGlassConfig,
-                searchButtonGlassConfig = TabBarConstants.darkThemeGlassConfigForCircle
+                hazeState = hazeState
             )
         }
     ) { paddingValues ->

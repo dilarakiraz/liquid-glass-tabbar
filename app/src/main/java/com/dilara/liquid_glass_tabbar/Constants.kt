@@ -7,8 +7,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
-import com.yourpackage.liquidglass.models.TabItem
+import com.yourpackage.liquidglass.LiquidGlassStyle
+import com.yourpackage.liquidglass.LiquidTabItem
 
 /**
  * Ortak sabitler ve yardımcı fonksiyonlar
@@ -19,20 +19,20 @@ object TabBarConstants {
      * GitHub için özelleştirilmiş tab'lar
      */
     val defaultTabs = listOf(
-        TabItem(
-            title = "Sayfam",
+        LiquidTabItem(
+            label = "Sayfam",
             icon = Icons.Default.Home,
             selectedColor = Color(0xFF82DBF7),    // Açık mavi (Home için)
             unselectedColor = Color(0xFFD3DCE6)   // Açık gri-mavi
         ),
-        TabItem(
-            title = "Listem",
+        LiquidTabItem(
+            label = "Listem",
             icon = Icons.Default.List,
             selectedColor = Color(0xFF4ECDC4),     // Turkuaz (Liste için)
             unselectedColor = Color(0xFFD3DCE6)   // Açık gri-mavi
         ),
-        TabItem(
-            title = "Ayarlar",
+        LiquidTabItem(
+            label = "Ayarlar",
             icon = Icons.Default.Settings,
             selectedColor = Color(0xFF9B9B9B),     // Gri (Ayarlar için)
             unselectedColor = Color(0xFFD3DCE6)   // Açık gri-mavi
@@ -55,47 +55,9 @@ object TabBarConstants {
     )
     
     /**
-     * Dark theme için Glass Config
-     * Şeffaf görünüm için opacity değerleri optimize edildi
+     * Dark theme için Glass Style
      */
-    val darkThemeGlassConfig = com.yourpackage.liquidglass.models.GlassConfig(
-        baseTint = Color(0x0DFFFFFF),      // Base tint (%5 beyaz)
-        gradientTint = Color(0x990A1926),  // Gradient tint (%60 koyu gri-mavi)
-        overlayTint = Color(0x33000000),    // Overlay tint (%20 siyah)
-        containerOpacity = 0.95f,           // Container opacity (iOS: 0.99, biraz daha şeffaf)
-        borderGradient = com.yourpackage.liquidglass.models.BorderGradient.Linear(
-            stops = listOf(
-                0.0f to Color.White.copy(alpha = 0.5f),   // borderStrong %50 opacity
-                0.2f to Color.White.copy(alpha = 0.2f),   // borderSoft %20 opacity
-                0.4f to Color.White.copy(alpha = 0.05f),   // borderSoft %5 opacity
-                0.6f to Color.White.copy(alpha = 0.05f),   // borderSoft %5 opacity
-                0.8f to Color.White.copy(alpha = 0.2f),   // borderSoft %20 opacity
-                1.0f to Color.White.copy(alpha = 0.5f)    // borderStrong %50 opacity
-            )
-        )
-    )
-    
-    /**
-     * Dark theme için Search Button Glass Config
-     * Şeffaf görünüm için opacity değerleri optimize edildi
-     */
-    val darkThemeGlassConfigForCircle = com.yourpackage.liquidglass.models.GlassConfig(
-        baseTint = Color(0x0DFFFFFF),
-        gradientTint = Color(0x990A1926),
-        overlayTint = Color(0x33000000),
-        borderWidth = 1.dp,
-        containerOpacity = 0.95f,           // Container opacity (iOS: 0.99, biraz daha şeffaf)
-        borderGradient = com.yourpackage.liquidglass.models.BorderGradient.Linear(
-            stops = listOf(
-                0.0f to Color.White.copy(alpha = 0.7f),   // borderStrong %70 opacity
-                0.2f to Color.White.copy(alpha = 0.2f),   // borderSoft %20 opacity
-                0.4f to Color.White.copy(alpha = 0.05f),   // borderSoft %5 opacity
-                0.6f to Color.White.copy(alpha = 0.05f),   // borderSoft %5 opacity
-                0.8f to Color.White.copy(alpha = 0.2f),   // borderSoft %20 opacity
-                1.0f to Color.White.copy(alpha = 0.8f)    // borderStrong %80 opacity
-            )
-        )
-    )
+    val darkThemeStyle = LiquidGlassStyle.Default
     
     /**
      * Light theme için gradient background renkleri
@@ -107,65 +69,39 @@ object TabBarConstants {
     )
     
     /**
-     * Light theme için Glass Config
-     * Açık tema için koyu border ve renkler
+     * Light theme için Glass Style
      */
-    val lightThemeGlassConfig = com.yourpackage.liquidglass.models.GlassConfig(
-        baseTint = Color(0x0D000000),      // Base tint (%5 siyah)
-        gradientTint = Color(0x99FFFFFF),  // Gradient tint (%60 beyaz)
-        overlayTint = Color(0x33FFFFFF),    // Overlay tint (%20 beyaz)
-        containerOpacity = 0.95f,
-        borderGradient = com.yourpackage.liquidglass.models.BorderGradient.Linear(
-            stops = listOf(
-                0.0f to Color.Black.copy(alpha = 0.3f),   // Koyu border (açık temada görünür)
-                0.2f to Color.Black.copy(alpha = 0.15f),
-                0.4f to Color.Black.copy(alpha = 0.08f),
-                0.6f to Color.Black.copy(alpha = 0.08f),
-                0.8f to Color.Black.copy(alpha = 0.15f),
-                1.0f to Color.Black.copy(alpha = 0.3f)
-            )
-        )
-    )
-    
-    /**
-     * Light theme için Search Button Glass Config
-     */
-    val lightThemeGlassConfigForCircle = com.yourpackage.liquidglass.models.GlassConfig(
-        baseTint = Color(0x0D000000),
-        gradientTint = Color(0x99FFFFFF),
-        overlayTint = Color(0x33FFFFFF),
-        borderWidth = 1.dp,
-        containerOpacity = 0.95f,
-        borderGradient = com.yourpackage.liquidglass.models.BorderGradient.Linear(
-            stops = listOf(
-                0.0f to Color.Black.copy(alpha = 0.4f),   // Koyu border
-                0.2f to Color.Black.copy(alpha = 0.15f),
-                0.4f to Color.Black.copy(alpha = 0.08f),
-                0.6f to Color.Black.copy(alpha = 0.08f),
-                0.8f to Color.Black.copy(alpha = 0.15f),
-                1.0f to Color.Black.copy(alpha = 0.4f)
-            )
-        )
+    val lightThemeStyle = LiquidGlassStyle(
+        blurRadius = androidx.compose.ui.unit.dp(10f),
+        backgroundAlpha = 0.95f,
+        borderWidth = androidx.compose.ui.unit.dp(0.75f),
+        borderOpacity = 0.3f, // Light theme için daha düşük opacity
+        cornerRadius = androidx.compose.ui.unit.dp(999f),
+        barHeight = androidx.compose.ui.unit.dp(62f),
+        horizontalPadding = androidx.compose.ui.unit.dp(20f),
+        topPadding = androidx.compose.ui.unit.dp(16f),
+        tabSearchSpacing = androidx.compose.ui.unit.dp(16f),
+        selectedTabBackgroundAlpha = 0.3f
     )
     
     /**
      * Light theme için tab renkleri (koyu renkler - açık temada görünür)
      */
     val lightThemeTabs = listOf(
-        TabItem(
-            title = "Sayfam",
+        LiquidTabItem(
+            label = "Sayfam",
             icon = Icons.Default.Home,
             selectedColor = Color(0xFF1976D2),    // Koyu mavi (açık temada görünür)
             unselectedColor = Color(0xFF757575)   // Koyu gri
         ),
-        TabItem(
-            title = "Listem",
+        LiquidTabItem(
+            label = "Listem",
             icon = Icons.Default.List,
             selectedColor = Color(0xFF00796B),     // Koyu turkuaz
             unselectedColor = Color(0xFF757575)
         ),
-        TabItem(
-            title = "Ayarlar",
+        LiquidTabItem(
+            label = "Ayarlar",
             icon = Icons.Default.Settings,
             selectedColor = Color(0xFF424242),     // Koyu gri
             unselectedColor = Color(0xFF757575)
@@ -176,24 +112,23 @@ object TabBarConstants {
      * Özel tab renkleri örneği
      */
     val customColoredTabs = listOf(
-        TabItem(
-            title = "Sayfam",
+        LiquidTabItem(
+            label = "Sayfam",
             icon = Icons.Default.Home,
             selectedColor = Color(0xFF82DBF7), // Açık mavi
             unselectedColor = Color(0xFF95A5A6) // Gri
         ),
-        TabItem(
-            title = "Listem",
+        LiquidTabItem(
+            label = "Listem",
             icon = Icons.Default.List,
             selectedColor = Color(0xFF4ECDC4), // Turkuaz
             unselectedColor = Color(0xFF95A5A6)
         ),
-        TabItem(
-            title = "Ayarlar",
+        LiquidTabItem(
+            label = "Ayarlar",
             icon = Icons.Default.Settings,
             selectedColor = Color(0xFF9B9B9B), // Gri
             unselectedColor = Color(0xFF95A5A6)
         )
     )
 }
-

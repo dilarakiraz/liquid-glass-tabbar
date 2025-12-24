@@ -27,7 +27,7 @@ import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 
 /**
- * Glass efektli dairesel container
+ * Internal: Glass efektli dairesel container
  * iOS'taki searchButtonBackground'ın Android eşdeğeri
  * 
  * @param hazeState Blur efekti için HazeState
@@ -36,7 +36,7 @@ import dev.chrisbanes.haze.hazeEffect
  * @param content İçerik
  */
 @Composable
-fun LiquidGlassCircle(
+internal fun LiquidGlassCircle(
     hazeState: HazeState? = null,
     modifier: Modifier = Modifier,
     glassConfig: GlassConfig = GlassConfig.forCircle(),

@@ -21,7 +21,8 @@ iOS LiquidGlassTabBar tasarımını Android Jetpack Compose'a uyarlayan, özelle
 - 🌈 **Özelleştirilebilir**: Tüm renkler, spacing, blur ve border ayarları özelleştirilebilir
 - 🔍 **Blur Efekti**: Haze kütüphanesi ile gerçekçi blur efekti
 - 📱 **Modern UI**: Jetpack Compose ile modern ve performanslı UI
-- 🎯 **Kolay Kullanım**: Basit API ile kolay entegrasyon
+- 🎯 **Kolay Kullanım**: Basit ve temiz SDK API'si
+- 🏗️ **SDK Ready**: Production-ready kütüphane yapısı
 
 ## 📸 Ekran Görüntüleri
 
@@ -38,10 +39,12 @@ iOS LiquidGlassTabBar tasarımını Android Jetpack Compose'a uyarlayan, özelle
     <td align="center">
       <img src="assets/screenshots/Screenshot_20251223_232033.png" width="280" alt="Dark Theme - List View"/>
       <br/>
+      <sub>Liste Görünümü</sub>
     </td>
     <td align="center">
       <img src="assets/screenshots/Screenshot_20251223_235653.png" width="280" alt="Dark Theme - Explore View"/>
       <br/>
+      <sub>Ayarlar Tabı</sub>
     </td>
   </tr>
 </table>
@@ -49,29 +52,6 @@ iOS LiquidGlassTabBar tasarımını Android Jetpack Compose'a uyarlayan, özelle
 </div>
 
 ## 📦 Kurulum
-
-### Proje Yapısı
-
-```
-liquidglasstabbar/
-├── liquidglass/              # ⭐ KÜTÜPHANE MODÜLÜ (Sadece bunu kullanın)
-│   └── src/main/java/com/yourpackage/liquidglass/
-│       ├── LiquidGlassTabBar.kt
-│       ├── LiquidGlassRectangle.kt
-│       ├── LiquidGlassCircle.kt
-│       └── models/
-│           ├── TabItem.kt
-│           ├── GlassConfig.kt
-│           ├── SpacingConfig.kt
-│           └── BorderGradient.kt
-└── app/                      # Demo uygulama (opsiyonel - sadece örnekler için)
-    └── src/main/java/com/dilara/liquid_glass_tabbar/
-        ├── MainActivity.kt
-        ├── TabBarPreviews.kt
-        └── Constants.kt
-```
-
-> **Not:** `app/` modülü sadece demo/örnek amaçlıdır. Kütüphaneyi kullanmak için sadece `liquidglass/` modülüne ihtiyacınız vardır.
 
 ### 🚀 SDK Olarak Kullanım (Önerilen - JitPack)
 
@@ -118,7 +98,6 @@ git clone https://github.com/dilarakiraz/liquid-glass-tabbar.git
 
 ```kotlin
 include(":liquidglass")
-// app modülüne ihtiyacınız yok - sadece kütüphane için
 ```
 
 **3. Kendi uygulamanızın build.gradle.kts** dosyasına dependency ekleyin:
@@ -130,64 +109,50 @@ dependencies {
 }
 ```
 
-**4. liquidglass/build.gradle.kts** yapılandırması (zaten hazır):
-
-```kotlin
-plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.compose")
-}
-
-android {
-    namespace = "com.yourpackage.liquidglass"
-    compileSdk = 34
-    
-    defaultConfig {
-        minSdk = 24
-    }
-    
-    buildFeatures {
-        compose = true
-    }
-}
-
-dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.haze)  // Blur efekti için
-}
-```
-
 ## 🚀 Hızlı Başlangıç
 
 ### Temel Kullanım
 
 ```kotlin
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
+import com.yourpackage.liquidglass.LiquidGlassTabBar
+import com.yourpackage.liquidglass.LiquidTabItem
+import com.yourpackage.liquidglass.LiquidGlassStyle
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeSource
+
 @Composable
 fun MyScreen() {
     val hazeState = remember { HazeState() }
     var selectedTab by remember { mutableIntStateOf(0) }
     
     val tabs = listOf(
-        TabItem(
-            title = "Sayfam",
+        LiquidTabItem(
             icon = Icons.Default.Home,
-            selectedColor = Color(0xFF82DBF7),    // Açık mavi
-            unselectedColor = Color(0xFFD3DCE6)    // Açık gri-mavi
-        ),
-        TabItem(
-            title = "Listem",
-            icon = Icons.Default.List,
-            selectedColor = Color(0xFF4ECDC4),      // Turkuaz
+            label = "Ana Sayfa",
+            selectedColor = Color(0xFF82DBF7),
             unselectedColor = Color(0xFFD3DCE6)
         ),
-        TabItem(
-            title = "Ayarlar",
+        LiquidTabItem(
+            icon = Icons.Default.List,
+            label = "Listem",
+            selectedColor = Color(0xFF4ECDC4),
+            unselectedColor = Color(0xFFD3DCE6)
+        ),
+        LiquidTabItem(
             icon = Icons.Default.Settings,
-            selectedColor = Color(0xFF9B9B9B),      // Gri
+            label = "Ayarlar",
+            selectedColor = Color(0xFF9B9B9B),
             unselectedColor = Color(0xFFD3DCE6)
         )
     )
@@ -195,11 +160,11 @@ fun MyScreen() {
     Scaffold(
         bottomBar = {
             LiquidGlassTabBar(
-                hazeState = hazeState,
-                selectedTab = selectedTab,
-                tabs = tabs,
+                items = tabs,
+                selectedIndex = selectedTab,
                 onTabSelected = { selectedTab = it },
-                onSearchClick = { /* Search action */ },
+                style = LiquidGlassStyle.Default,
+                hazeState = hazeState,
                 searchIcon = Icons.Default.Search
             )
         }
@@ -223,92 +188,79 @@ fun MyScreen() {
 
 ```kotlin
 val customTabs = listOf(
-    TabItem(
-        title = "Home",
+    LiquidTabItem(
         icon = Icons.Default.Home,
+        label = "Home",
         selectedColor = Color(0xFF82DBF7),    // Seçili tab rengi
-        unselectedColor = Color(0xFFD3DCE6)  // Seçili olmayan tab rengi
+        unselectedColor = Color(0xFFD3DCE6)   // Seçili olmayan tab rengi
     )
 )
 ```
 
-### Glass Efekt Özelleştirme
+### Style Presets
+
+Kütüphane hazır style preset'leri sunar:
 
 ```kotlin
-val customGlassConfig = GlassConfig(
-    baseTint = Color(0x0DFFFFFF),           // Base tint
-    gradientTint = Color(0x990A1926),       // Gradient tint
-    overlayTint = Color(0x33000000),        // Overlay tint
-    borderWidth = 0.75.dp,                  // Border genişliği
-    blurRadius = 10.dp,                     // Blur radius
-    containerOpacity = 0.95f,                // Container opacity
-    selectedTabBackgroundAlpha = 0.3f        // Seçili tab background alpha
+// iOS-style (varsayılan)
+LiquidGlassTabBar(
+    items = tabs,
+    selectedIndex = selectedTab,
+    onTabSelected = { selectedTab = it },
+    style = LiquidGlassStyle.Default  // veya LiquidGlassStyle.ios()
 )
 
+// Neon-style (daha güçlü blur ve parlak border)
 LiquidGlassTabBar(
-    hazeState = hazeState,
-    selectedTab = selectedTab,
-    tabs = tabs,
+    items = tabs,
+    selectedIndex = selectedTab,
     onTabSelected = { selectedTab = it },
-    glassConfig = customGlassConfig
+    style = LiquidGlassStyle.neon()
+)
+
+// Minimal-style (ince efektler)
+LiquidGlassTabBar(
+    items = tabs,
+    selectedIndex = selectedTab,
+    onTabSelected = { selectedTab = it },
+    style = LiquidGlassStyle.minimal()
 )
 ```
 
-### Dark Theme
+### Özel Style Oluşturma
 
 ```kotlin
-val darkThemeGlassConfig = GlassConfig(
-    baseTint = Color(0x0DFFFFFF),
-    gradientTint = Color(0x990A1926),
-    overlayTint = Color(0x33000000),
-    containerOpacity = 0.95f
+val customStyle = LiquidGlassStyle(
+    blurRadius = 15.dp,              // Blur radius
+    backgroundAlpha = 0.9f,          // Arka plan şeffaflığı
+    borderWidth = 1.dp,              // Border genişliği
+    borderOpacity = 0.7f,            // Border opacity
+    cornerRadius = 999.dp,           // Köşe yuvarlaklığı
+    barHeight = 68.dp,               // Tab bar yüksekliği
+    horizontalPadding = 24.dp,       // Yatay padding
+    topPadding = 20.dp,              // Üst padding
+    tabSearchSpacing = 20.dp,        // Tab ve search arası spacing
+    selectedTabBackgroundAlpha = 0.4f // Seçili tab background alpha
 )
 
 LiquidGlassTabBar(
-    hazeState = hazeState,
-    selectedTab = selectedTab,
-    tabs = tabs,
+    items = tabs,
+    selectedIndex = selectedTab,
     onTabSelected = { selectedTab = it },
-    glassConfig = darkThemeGlassConfig
+    style = customStyle
 )
 ```
 
-### Spacing Özelleştirme
+### Label Olmadan (Sadece Icon)
 
 ```kotlin
-val customSpacing = SpacingConfig(
-    horizontalPadding = 24.dp,
-    topPadding = 20.dp,
-    tabSearchSpacing = 20.dp,
-    tabButtonSpacing = 8.dp,
-    iconTextSpacing = 4.dp
-)
-
-LiquidGlassTabBar(
-    hazeState = hazeState,
-    selectedTab = selectedTab,
-    tabs = tabs,
-    onTabSelected = { selectedTab = it },
-    spacingConfig = customSpacing
-)
-```
-
-### Border Gradient Özelleştirme
-
-```kotlin
-val customBorderGradient = BorderGradient.Linear(
-    stops = listOf(
-        0.0f to Color.White.copy(alpha = 0.5f),
-        0.2f to Color.White.copy(alpha = 0.2f),
-        0.4f to Color.White.copy(alpha = 0.05f),
-        0.6f to Color.White.copy(alpha = 0.05f),
-        0.8f to Color.White.copy(alpha = 0.2f),
-        1.0f to Color.White.copy(alpha = 0.5f)
+val iconOnlyTabs = listOf(
+    LiquidTabItem(
+        icon = Icons.Default.Home,
+        label = null,  // Label yok - sadece icon gösterilir
+        selectedColor = Color(0xFF82DBF7),
+        unselectedColor = Color(0xFFD3DCE6)
     )
-)
-
-val customGlassConfig = GlassConfig(
-    borderGradient = customBorderGradient
 )
 ```
 
@@ -316,23 +268,32 @@ val customGlassConfig = GlassConfig(
 
 ```kotlin
 LiquidGlassTabBar(
-    hazeState = hazeState,
-    selectedTab = selectedTab,
-    tabs = tabs,
+    items = tabs,
+    selectedIndex = selectedTab,
     onTabSelected = { selectedTab = it },
     showSearchButton = false  // Search button gizle
 )
 ```
 
-### Özel Yükseklik
+### HazeState Otomatik Yönetimi
+
+`hazeState` parametresi optional'dır. Verilmezse otomatik oluşturulur:
 
 ```kotlin
+// hazeState otomatik yönetiliyor
 LiquidGlassTabBar(
-    hazeState = hazeState,
-    selectedTab = selectedTab,
-    tabs = tabs,
+    items = tabs,
+    selectedIndex = selectedTab,
+    onTabSelected = { selectedTab = it }
+)
+
+// Veya manuel olarak yönetebilirsiniz
+val hazeState = remember { HazeState() }
+LiquidGlassTabBar(
+    items = tabs,
+    selectedIndex = selectedTab,
     onTabSelected = { selectedTab = it },
-    barHeight = 72.dp  // Özel yükseklik
+    hazeState = hazeState  // Manuel yönetim
 )
 ```
 
@@ -343,62 +304,53 @@ LiquidGlassTabBar(
 ```kotlin
 @Composable
 fun LiquidGlassTabBar(
-    hazeState: HazeState,                    // Blur için HazeState (zorunlu)
-    selectedTab: Int,                        // Seçili tab index
-    tabs: List<TabItem>,                     // Tab listesi
-    onTabSelected: (Int) -> Unit,            // Tab seçim callback
-    onSearchClick: () -> Unit = {},         // Search button callback
-    modifier: Modifier = Modifier,           // Compose modifier
-    glassConfig: GlassConfig = GlassConfig.default(),  // Glass efekt config
-    searchButtonGlassConfig: GlassConfig? = null,       // Search button için özel config
-    spacingConfig: SpacingConfig = SpacingConfig.default(),  // Spacing config
-    barHeight: Dp = 62.dp,                  // Tab bar yüksekliği
-    showSearchButton: Boolean = true,        // Search button göster/gizle
-    searchIcon: ImageVector? = null,         // Search button icon
-    searchIconTint: Color = Color.White      // Search icon rengi (varsayılan: beyaz)
+    items: List<LiquidTabItem>,              // Tab listesi
+    selectedIndex: Int,                       // Seçili tab index
+    onTabSelected: (Int) -> Unit,             // Tab seçim callback
+    modifier: Modifier = Modifier,            // Compose modifier
+    style: LiquidGlassStyle = LiquidGlassStyle.Default,  // Style configuration
+    onSearchClick: () -> Unit = {},          // Search button callback
+    showSearchButton: Boolean = true,         // Search button göster/gizle
+    searchIcon: ImageVector? = null,          // Search button icon
+    hazeState: HazeState? = null              // HazeState (optional - otomatik oluşturulur)
 )
 ```
 
-### TabItem
+### LiquidTabItem
 
 ```kotlin
-data class TabItem(
-    val title: String,                       // Tab başlığı
-    val icon: ImageVector,                  // Tab ikonu
-    val selectedIcon: ImageVector? = null,  // Seçili durumda ikon (opsiyonel)
+data class LiquidTabItem(
+    val icon: ImageVector,                    // Tab ikonu (zorunlu)
+    val label: String? = null,                // Tab etiketi (opsiyonel - null ise sadece icon)
+    val selectedIcon: ImageVector? = null,    // Seçili durumda ikon (opsiyonel)
     val selectedColor: Color = Color(0xFF82DBF7),   // Seçili tab rengi
     val unselectedColor: Color = Color(0xFFD3DCE6)  // Seçili olmayan tab rengi
 )
 ```
 
-### GlassConfig
+### LiquidGlassStyle
 
 ```kotlin
-data class GlassConfig(
-    val baseTint: Color = Color.Transparent,
-    val gradientTint: Color = Color(0xABFFFFFF),
-    val overlayTint: Color = Color.Transparent,
-    val borderWidth: Dp = 0.75.dp,
-    val borderGradient: BorderGradient = BorderGradient.default(),
-    val blurRadius: Dp = 10.dp,
-    val containerOpacity: Float = 0.95f,
-    val selectedTabBackground: Color? = null,
-    val selectedTabBackgroundAlpha: Float = 0.3f
-)
-```
-
-### SpacingConfig
-
-```kotlin
-data class SpacingConfig(
-    val horizontalPadding: Dp = 20.dp,
-    val topPadding: Dp = 16.dp,
-    val bottomPadding: Dp = 0.dp,
-    val tabSearchSpacing: Dp = 16.dp,
-    val tabButtonSpacing: Dp = 0.dp,
-    val tabButtonPadding: PaddingValues = PaddingValues(...),
-    val iconTextSpacing: Dp = 2.dp
-)
+data class LiquidGlassStyle(
+    val blurRadius: Dp = 10.dp,              // Blur radius
+    val backgroundAlpha: Float = 0.95f,       // Arka plan şeffaflığı (0.0 - 1.0)
+    val borderWidth: Dp = 0.75.dp,           // Border genişliği
+    val borderOpacity: Float = 0.5f,          // Border opacity (0.0 - 1.0)
+    val cornerRadius: Dp = 999.dp,           // Köşe yuvarlaklığı (999.dp = pill shape)
+    val barHeight: Dp = 62.dp,               // Tab bar yüksekliği
+    val horizontalPadding: Dp = 20.dp,       // Yatay padding
+    val topPadding: Dp = 16.dp,              // Üst padding
+    val tabSearchSpacing: Dp = 16.dp,        // Tab ve search arası spacing
+    val selectedTabBackgroundAlpha: Float = 0.3f,  // Seçili tab background alpha
+    val selectedTabBackground: Color? = null  // Seçili tab background rengi (null = auto)
+) {
+    companion object {
+        val Default: LiquidGlassStyle = ios()
+        fun ios(): LiquidGlassStyle          // iOS-style preset
+        fun neon(): LiquidGlassStyle         // Neon-style preset
+        fun minimal(): LiquidGlassStyle      // Minimal-style preset
+    }
+}
 ```
 
 ## ⚠️ Önemli Notlar
@@ -412,25 +364,49 @@ data class SpacingConfig(
    }
    ```
 
-2. **HazeState**: `HazeState`'i `remember` ile oluşturun ve tüm ekranda aynı instance'ı kullanın.
+2. **HazeState**: `HazeState`'i `remember` ile oluşturun ve tüm ekranda aynı instance'ı kullanın. `hazeState` parametresi optional'dır - verilmezse otomatik oluşturulur.
 
 3. **Tab Sayısı**: İstediğiniz kadar tab ekleyebilirsiniz. Search button'u gizleyerek tüm alanı tab'lara ayırabilirsiniz.
 
 4. **Import**: Kütüphaneyi kullanmak için:
    ```kotlin
    import com.yourpackage.liquidglass.LiquidGlassTabBar
-   import com.yourpackage.liquidglass.models.TabItem
-   import com.yourpackage.liquidglass.models.GlassConfig
-   import com.yourpackage.liquidglass.models.SpacingConfig
+   import com.yourpackage.liquidglass.LiquidTabItem
+   import com.yourpackage.liquidglass.LiquidGlassStyle
    ```
 
-5. **Light Theme**: Açık tema için `searchIconTint` parametresini koyu renk yapın:
+5. **Light Theme**: Açık tema için `LiquidGlassStyle`'da `borderOpacity` değerini düşürebilirsiniz:
    ```kotlin
-   LiquidGlassTabBar(
-       // ...
-       searchIconTint = Color(0xFF424242)  // Koyu gri - açık temada görünür
+   val lightStyle = LiquidGlassStyle(
+       borderOpacity = 0.3f  // Açık temada daha ince border
    )
    ```
+
+## 🏗️ Proje Yapısı
+
+```
+liquidglasstabbar/
+├── liquidglass/              # ⭐ KÜTÜPHANE MODÜLÜ
+│   └── src/main/java/com/yourpackage/liquidglass/
+│       ├── LiquidGlassTabBar.kt      # Public API
+│       ├── LiquidTabItem.kt           # Public API
+│       ├── LiquidGlassStyle.kt        # Public API
+│       ├── LiquidGlassRectangle.kt   # Internal
+│       ├── LiquidGlassCircle.kt       # Internal
+│       └── models/                    # Internal models
+│           ├── TabItem.kt
+│           ├── GlassConfig.kt
+│           ├── SpacingConfig.kt
+│           └── BorderGradient.kt
+├── sample-app/               # 📱 Sample App (SDK örneği)
+│   └── src/main/java/com/yourpackage/liquidglass/sample/
+│       └── MainActivity.kt
+└── app/                      # Demo uygulama (opsiyonel)
+    └── src/main/java/com/dilara/liquid_glass_tabbar/
+        └── MainActivity.kt
+```
+
+> **Not:** `sample-app/` modülü SDK kullanım örneği içerir. `app/` modülü demo amaçlıdır.
 
 ## 📄 Lisans
 
@@ -445,6 +421,7 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 ## 🙏 Teşekkürler
 
 - iOS LiquidGlassTabBar tasarımından ilham alınmıştır
+- [Haze](https://github.com/chrisbanes/haze) kütüphanesi blur efekti için kullanılmıştır
 
 ---
 
@@ -453,4 +430,3 @@ Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICE
 ⭐ Bu projeyi beğendiyseniz yıldız vermeyi unutmayın!
 
 </div>
-

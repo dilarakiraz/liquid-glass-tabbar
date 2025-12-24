@@ -4,7 +4,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 
 /**
- * Tab item modeli
+ * Internal: Tab item modeli
  * 
  * @param title Tab başlığı
  * @param icon Tab ikonu (ImageVector)
@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
  * @param selectedColor Seçili tab rengi (varsayılan: #82DBF7)
  * @param unselectedColor Seçili olmayan tab rengi (varsayılan: #D3DCE6)
  */
-data class TabItem(
+internal data class TabItem(
     val title: String,
     val icon: ImageVector,
     val selectedIcon: ImageVector? = null,

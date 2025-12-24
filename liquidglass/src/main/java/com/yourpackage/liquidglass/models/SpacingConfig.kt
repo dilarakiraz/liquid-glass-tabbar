@@ -5,10 +5,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Spacing yapılandırması
+ * Internal: Spacing yapılandırması
  * iOS'taki padding ve spacing değerlerini kontrol eder
  */
-data class SpacingConfig(
+internal data class SpacingConfig(
     /**
      * Yatay padding (iOS: 20px)
      */

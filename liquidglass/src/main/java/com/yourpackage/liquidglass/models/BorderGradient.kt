@@ -4,12 +4,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 
 /**
- * Border gradient tipi
+ * Internal: Border gradient tipi
  * 
  * Linear: Çapraz geçiş (iOS ile uyumlu)
  * Sweep: Dairesel geçiş (alternatif)
  */
-sealed class BorderGradient {
+internal sealed class BorderGradient {
     /**
      * Linear gradient - iOS ile aynı çapraz geçiş efekti
      * 

@@ -5,11 +5,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * Glass efekt yapılandırması
+ * Internal: Glass efekt yapılandırması
  * 
  * iOS'taki BlurView ve gradient border ayarlarını kontrol eder
  */
-data class GlassConfig(
+internal data class GlassConfig(
     /**
      * Base tint color (varsayılan: Transparent)
      */

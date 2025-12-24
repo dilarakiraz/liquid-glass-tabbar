@@ -27,7 +27,7 @@ import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 
 /**
- * Glass efektli dikdörtgen container
+ * Internal: Glass efektli dikdörtgen container
  * iOS'taki tabButtonsBackground'ın Android eşdeğeri
  * 
  * @param hazeState Blur efekti için HazeState (null ise blur uygulanmaz)
@@ -37,7 +37,7 @@ import dev.chrisbanes.haze.hazeEffect
  * @param content İçerik
  */
 @Composable
-fun LiquidGlassRectangle(
+internal fun LiquidGlassRectangle(
     hazeState: HazeState? = null,
     modifier: Modifier = Modifier,
     shape: Shape = androidx.compose.foundation.shape.RoundedCornerShape(999.dp),

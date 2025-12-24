@@ -24,47 +24,62 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.yourpackage.liquidglass.models.GlassConfig
-import com.yourpackage.liquidglass.models.SpacingConfig
 import com.yourpackage.liquidglass.models.TabItem
 import dev.chrisbanes.haze.HazeState
 
 /**
- * iOS LiquidGlassTabBar'ın Android eşdeğeri
+ * Public API: iOS-style liquid glass tab bar for Android Jetpack Compose
  * 
- * @param hazeState Blur efekti için HazeState (zorunlu)
- * @param selectedTab Seçili tab index
- * @param tabs Tab listesi
- * @param onTabSelected Tab seçim callback
- * @param onSearchClick Search button click callback
+ * A beautiful, customizable tab bar with blur effects and gradient borders,
+ * inspired by iOS LiquidGlassTabBar design.
+ * 
+ * @param items List of tab items to display
+ * @param selectedIndex Currently selected tab index
+ * @param onTabSelected Callback when a tab is selected
  * @param modifier Compose modifier
- * @param glassConfig Glass efekt yapılandırması
- * @param spacingConfig Spacing yapılandırması
- * @param barHeight Tab bar yüksekliği (varsayılan: 62.dp - iOS ile aynı)
- * @param showSearchButton Search button gösterilsin mi (varsayılan: true)
- * @param searchIcon Search button içinde gösterilecek icon (opsiyonel)
+ * @param style Style configuration (default: LiquidGlassStyle.Default)
+ * @param onSearchClick Callback when search button is clicked
+ * @param showSearchButton Whether to show the search button (default: true)
+ * @param searchIcon Icon to display in search button (optional)
+ * 
+ * @sample com.yourpackage.liquidglass.samples.BasicUsage
  */
 @Composable
-fun LiquidGlassTabBar(
-    hazeState: HazeState,
-    selectedTab: Int,
-    tabs: List<TabItem>,
+public fun LiquidGlassTabBar(
+    items: List<LiquidTabItem>,
+    selectedIndex: Int,
     onTabSelected: (Int) -> Unit,
-    onSearchClick: () -> Unit = {},
     modifier: Modifier = Modifier,
-    glassConfig: GlassConfig = GlassConfig.default(),
-    searchButtonGlassConfig: GlassConfig? = null, // Search button için özel config (null ise GlassConfig.forCircle() kullanılır)
-    spacingConfig: SpacingConfig = SpacingConfig.default(),
-    barHeight: Dp = 62.dp,
+    style: LiquidGlassStyle = LiquidGlassStyle.Default,
+    onSearchClick: () -> Unit = {},
     showSearchButton: Boolean = true,
-    searchIcon: androidx.compose.ui.graphics.vector.ImageVector? = null,
-    searchIconTint: Color = Color.White,  // Search icon rengi (varsayılan: beyaz)
+    searchIcon: ImageVector? = null,
+    hazeState: HazeState? = null
 ) {
-    val shape = RoundedCornerShape(999.dp)
+    // Internal: Manage hazeState automatically if not provided
+    val internalHazeState = hazeState ?: remember { HazeState() }
+    
+    // Internal: Convert public API to internal models
+    val glassConfig = style.toGlassConfig()
+    val spacingConfig = style.toSpacingConfig()
+    val searchButtonGlassConfig = style.toGlassConfigForCircle()
+    
+    // Internal: Convert LiquidTabItem to TabItem
+    val internalTabs = items.map { liquidTab ->
+        TabItem(
+            title = liquidTab.label ?: "",
+            icon = liquidTab.icon,
+            selectedIcon = liquidTab.selectedIcon,
+            selectedColor = liquidTab.selectedColor,
+            unselectedColor = liquidTab.unselectedColor
+        )
+    }
+    
+    val shape = RoundedCornerShape(style.cornerRadius)
     
     Row(
         modifier = modifier
@@ -79,10 +94,10 @@ fun LiquidGlassTabBar(
     ) {
         // Tab Buttons Container
         LiquidGlassRectangle(
-            hazeState = hazeState,
+            hazeState = internalHazeState,
             modifier = Modifier
                 .weight(1f)
-                .height(barHeight),
+                .height(style.barHeight),
             shape = shape,
             glassConfig = glassConfig
         ) {
@@ -93,8 +108,8 @@ fun LiquidGlassTabBar(
                 horizontalArrangement = Arrangement.spacedBy(spacingConfig.tabButtonSpacing),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                tabs.forEachIndexed { index, tab ->
-                    val isSelected = index == selectedTab
+                internalTabs.forEachIndexed { index, tab ->
+                    val isSelected = index == selectedIndex
                     val color = if (isSelected) tab.selectedColor else tab.unselectedColor
                     val icon = if (isSelected && tab.selectedIcon != null) {
                         tab.selectedIcon
@@ -102,7 +117,7 @@ fun LiquidGlassTabBar(
                         tab.icon
                     }
                     
-                    // Selected tab background rengi
+                    // Selected tab background color
                     val selectedBackground = glassConfig.selectedTabBackground
                         ?: Color.White.copy(alpha = glassConfig.selectedTabBackgroundAlpha)
                     
@@ -137,13 +152,15 @@ fun LiquidGlassTabBar(
                             tint = color,
                             modifier = Modifier.size(24.dp)
                         )
-                        Text(
-                            text = tab.title,
-                            color = color,
-                            fontSize = 12.sp,
-                            fontWeight = FontWeight.Medium,
-                            maxLines = 1
-                        )
+                        if (tab.title.isNotEmpty()) {
+                            Text(
+                                text = tab.title,
+                                color = color,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight.Medium,
+                                maxLines = 1
+                            )
+                        }
                     }
                 }
             }
@@ -153,7 +170,7 @@ fun LiquidGlassTabBar(
         if (showSearchButton) {
             Box(
                 modifier = Modifier
-                    .size(barHeight)
+                    .size(style.barHeight)
                     .clip(CircleShape)
                     .clickable(
                         indication = null,
@@ -163,18 +180,16 @@ fun LiquidGlassTabBar(
                     }
             ) {
                 LiquidGlassCircle(
-                    hazeState = hazeState,
+                    hazeState = internalHazeState,
                     modifier = Modifier.fillMaxSize(),
-                    glassConfig = searchButtonGlassConfig ?: GlassConfig.forCircle()
+                    glassConfig = searchButtonGlassConfig
                 ) {
-                    // Search icon buraya eklenecek
-                    // Kullanıcı kendi icon'unu sağlamalı
                     searchIcon?.let { icon ->
                         Icon(
                             imageVector = icon,
                             contentDescription = "Search",
                             modifier = Modifier.size(24.dp),
-                            tint = searchIconTint  // Parametre olarak gelen renk
+                            tint = Color.White
                         )
                     }
                 }
@@ -182,5 +197,3 @@ fun LiquidGlassTabBar(
         }
     }
 }
-
-
