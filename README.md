@@ -72,12 +72,19 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
+    // Liquid Glass Tab Bar kütüphanesi
     implementation("com.github.dilarakiraz:liquid-glass-tabbar:1.0.0")
+    
+    // Haze kütüphanesi (blur efekti için gerekli)
+    implementation("dev.chrisbanes.haze:haze:1.4.0")
+    
     // ... diğer dependencies
 }
 ```
 
-> **Not:** İlk release'den sonra version tag'i oluşturmanız gerekecek. Şimdilik `main-SNAPSHOT` veya commit hash kullanabilirsiniz:
+> **Not:** 
+> - Haze kütüphanesi blur efekti için gereklidir. Kütüphanemiz Haze'e bağımlıdır.
+> - İlk release'den sonra version tag'i oluşturmanız gerekecek. Şimdilik `main-SNAPSHOT` veya commit hash kullanabilirsiniz:
 > ```kotlin
 > implementation("com.github.dilarakiraz:liquid-glass-tabbar:main-SNAPSHOT")
 > // veya belirli bir commit için:
@@ -104,10 +111,17 @@ include(":liquidglass")
 
 ```kotlin
 dependencies {
+    // Liquid Glass Tab Bar modülü
     implementation(project(":liquidglass"))
+    
+    // Haze kütüphanesi (blur efekti için gerekli)
+    implementation("dev.chrisbanes.haze:haze:1.4.0")
+    
     // ... diğer dependencies
 }
 ```
+
+> **Not:** Haze kütüphanesi blur efekti için gereklidir. Kütüphanemiz Haze'e bağımlıdır.
 
 ## 🚀 Hızlı Başlangıç
 
@@ -341,7 +355,7 @@ data class LiquidGlassStyle(
     val horizontalPadding: Dp = 20.dp,       // Yatay padding
     val topPadding: Dp = 16.dp,              // Üst padding
     val tabSearchSpacing: Dp = 16.dp,        // Tab ve search arası spacing
-    val selectedTabBackgroundAlpha: Float = 0.3f,  // Seçili tab background alpha
+    val selectedTabBackgroundAlpha: Float = 0.5f,  // Seçili tab background alpha
     val selectedTabBackground: Color? = null  // Seçili tab background rengi (null = auto)
 ) {
     companion object {
